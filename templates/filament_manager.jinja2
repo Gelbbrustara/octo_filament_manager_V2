@@ -1,7 +1,22 @@
-{# filament_manager/templates/filament_manager.jinja2 #}
+<!-- filament_manager/templates/filament_manager.jinja2 -->
 <div class="container">
     <h2>Filament Manager</h2>
+    <form id="add_filament_form">
+        <div>
+            <label for="filament_name">Filament Name:</label>
+            <input type="text" id="filament_name" name="filament_name" required>
+        </div>
+        <div>
+            <label for="filament_color">Filament Color:</label>
+            <input type="color" id="filament_color" name="filament_color" required>
+        </div>
+        <div>
+            <label for="filament_usage">Filament Usage (g):</label>
+            <input type="number" id="filament_usage" name="filament_usage" required>
+        </div>
+        <button type="submit">Add Filament</button>
+    </form>
     <div id="filament_list">
-        <!-- Hier wird die Liste der Filamente angezeigt -->
+        <!-- Filament items werden hier dynamisch hinzugefügt -->
     </div>
 </div>

@@ -1,4 +1,5 @@
 /* filament_manager/static/css/filament_manager.css */
+
 .container {
     max-width: 800px;
     margin: 20px auto;
@@ -7,4 +8,34 @@
     border-radius: 5px;
 }
 
-/* Weitere Stile nach Bedarf hinzufügen */
+#filament_list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filament-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 150px;
+    text-align: center;
+}
+
+.filament-color {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.filament-name {
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.filament-bar {
+    margin-top: 10px;
+    height: 10px;
+    background-color: #4caf50;
+}
