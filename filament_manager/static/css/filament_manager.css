@@ -1,0 +1,10 @@
+/* filament_manager/static/css/filament_manager.css */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Weitere Stile nach Bedarf hinzufügen */
