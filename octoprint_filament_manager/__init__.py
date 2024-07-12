@@ -1,6 +1,7 @@
 import octoprint.plugin
-import os
+import flask
 import json
+import os
 
 class FilamentManagerPlugin(octoprint.plugin.StartupPlugin,
                             octoprint.plugin.TemplatePlugin,
@@ -8,65 +9,58 @@ class FilamentManagerPlugin(octoprint.plugin.StartupPlugin,
                             octoprint.plugin.SimpleApiPlugin):
 
     def __init__(self):
-        self.filament_data_file = self._basefolder + "/filament_data.json"
-        if not os.path.exists(self.filament_data_file):
-            with open(self.filament_data_file, 'w') as f:
-                json.dump({"prints": [], "filaments": []}, f)
+        self.filament_data_file = os.path.join(self.get_plugin_data_folder(), "filament_data.json")
 
     def on_after_startup(self):
-        self._logger.info("Octo Filament Manager Plugin started")
+        self._logger.info("FilamentManagerPlugin started")
 
     def get_template_configs(self):
         return [
             dict(type="navbar", custom_bindings=False),
-            dict(type="settings", custom_bindings=False),
-            dict(type="tab", custom_bindings=False)
+            dict(type="settings", custom_bindings=False)
         ]
 
     def get_assets(self):
         return {
             "js": ["js/filament_manager.js"],
-            "css": ["css/filament_manager.css"]
+            "css": ["css/filament_manager.css"],
+            "less": ["less/filament_manager.less"]
         }
 
     def get_api_commands(self):
         return dict(
-            add_print=["name", "color", "weight", "cost"],
+            add_filament=[],
             get_filament_data=[]
         )
 
     def on_api_command(self, command, data):
-        if command == "add_print":
-            return self.add_print(data)
+        import flask
+        if command == "add_filament":
+            return self.add_filament(data)
         elif command == "get_filament_data":
             return self.get_filament_data()
 
-    def add_print(self, data):
-        with open(self.filament_data_file, 'r') as f:
-            filament_data = json.load(f)
-
-        new_print = {
-            "name": data["name"],
-            "color": data["color"],
-            "weight": float(data["weight"]),
-            "cost": float(data["cost"]),
-            "date": data["date"]
-        }
-
-        filament_data["prints"].append(new_print)
-        filament_data["prints"] = sorted(filament_data["prints"], key=lambda x: (x["color"], -x["date"]))
-
-        with open(self.filament_data_file, 'w') as f:
-            json.dump(filament_data, f)
-
+    def add_filament(self, data):
+        filament_data = self.load_filament_data()
+        filament_data.append(data)
+        self.save_filament_data(filament_data)
         return flask.jsonify(filament_data)
 
     def get_filament_data(self):
-        with open(self.filament_data_file, 'r') as f:
-            filament_data = json.load(f)
+        filament_data = self.load_filament_data()
         return flask.jsonify(filament_data)
 
-__plugin_name__ = "Octo Filament Manager"
+    def load_filament_data(self):
+        if not os.path.exists(self.filament_data_file):
+            return []
+        with open(self.filament_data_file, 'r') as f:
+            return json.load(f)
+
+    def save_filament_data(self, data):
+        with open(self.filament_data_file, 'w') as f:
+            json.dump(data, f)
+
+__plugin_name__ = "OctoPrint-Filament-Manager"
 __plugin_version__ = "4.2.0"
 __plugin_description__ = "A plugin to manage 3D printing filament usage"
 __plugin_pythoncompat__ = ">=3.7,<4"
