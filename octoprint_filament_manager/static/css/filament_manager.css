@@ -1,41 +1,45 @@
-/* filament_manager/static/css/filament_manager.css */
+/* Custom CSS for the filament manager plugin */
 
-.container {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#filament_list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.filament-item {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
+#filament-list .filament-item {
+    display: inline-block;
     width: 150px;
+    height: 150px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     text-align: center;
+    vertical-align: top;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.filament-color {
+#filament-list .filament-item .color-circle {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin: 0 auto;
+    margin: 10px auto;
 }
 
-.filament-name {
+#filament-list .filament-item .color-name {
     font-style: italic;
-    margin-top: 5px;
 }
 
-.filament-bar {
-    margin-top: 10px;
-    height: 10px;
-    background-color: #4caf50;
+#filament-list .filament-item .bar-chart {
+    width: 100%;
+    height: 20px;
+    background-color: #e0e0e0;
+    position: relative;
+}
+
+#filament-list .filament-item .bar-chart .bar {
+    height: 100%;
+    background-color: #76c7c0;
+}
+
+#filament-details {
+    display: none;
+}
+
+#filament-details.active {
+    display: block;
 }

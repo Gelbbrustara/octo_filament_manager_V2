@@ -12,3 +12,61 @@
         <p>Manage your filament settings here.</p>
     </div>
 </div>
+
+<!-- Tab template -->
+<div id="tab_plugin_filament_manager" class="tab-pane" role="tabpanel">
+    <div class="row-fluid">
+        <h3>Filament Manager</h3>
+        
+        <h4>Add New Print</h4>
+        <div>
+            <label for="newPrintName">Print Name:</label>
+            <input type="text" id="newPrintName" data-bind="value: newPrintName">
+        </div>
+        <div>
+            <label for="newPrintColor">Filament Color:</label>
+            <input type="text" id="newPrintColor" data-bind="value: newPrintColor">
+        </div>
+        <div>
+            <label for="newPrintWeight">Filament Weight (g):</label>
+            <input type="number" id="newPrintWeight" data-bind="value: newPrintWeight">
+        </div>
+        <div>
+            <label for="newPrintCost">Print Cost (€/kg):</label>
+            <input type="number" id="newPrintCost" data-bind="value: newPrintCost">
+        </div>
+        <div>
+            <label for="newPrintDate">Print Date:</label>
+            <input type="date" id="newPrintDate" data-bind="value: newPrintDate">
+        </div>
+        <button type="button" data-bind="click: addPrint">Add Print</button>
+
+        <h4>Filament Usage Overview</h4>
+        <div id="filament-list" data-bind="foreach: filaments">
+            <div class="filament-item" data-bind="click: $parent.showDetails">
+                <div class="color-circle" data-bind="style: { backgroundColor: color }"></div>
+                <div class="color-name" data-bind="text: color"></div>
+                <div class="bar-chart">
+                    <div class="bar" data-bind="style: { width: (usage / total * 100) + '%' }"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="filament-details" data-bind="with: selectedFilament">
+            <h4>Filament Details</h4>
+            <div class="color-circle" data-bind="style: { backgroundColor: color }"></div>
+            <div class="color-name" data-bind="text: color"></div>
+            <div class="bar-chart">
+                <div class="bar" data-bind="style: { width: (usage / total * 100) + '%' }"></div>
+            </div>
+            <h5>Print History</h5>
+            <div data-bind="foreach: prints">
+                <div>
+                    <span data-bind="text: name"></span>
+                    <span data-bind="text: weight + 'g'"></span>
+                    <span data-bind="text: '€' + (weight * cost / 1000).toFixed(2)"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
