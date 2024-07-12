@@ -1,3 +1,4 @@
 # FilamentManager/MANIFEST.in
 recursive-include filament_manager/templates *
 recursive-include filament_manager/static *
+include README.md
